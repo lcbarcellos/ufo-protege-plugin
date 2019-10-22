@@ -3,7 +3,7 @@
     <VSNode splits="1.0">
         <CNode>
             <Component label="UFO Validation">
-                <Property id="pluginId" value="br.ufes.inf.nemo.project.artifactId.ufopp.view"/>
+                <Property id="pluginId" value="br.ufes.inf.nemo.ufo-protege-plugin.ufopp.view"/>
             </Component>
         </CNode>
     </VSNode>

@@ -12,8 +12,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
-        
+
+
         <protege.run.config>${protege.home}/config.xml</protege.run.config>
         <protege.osgi></protege.osgi>
         <protege.launcher></protege.launcher>
@@ -50,37 +50,16 @@
             <version>5.5.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>br.ufes.inf.nemo</groupId>
+            <artifactId>protege-plugin-annotations</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
-                <version>3.3.3</version>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>xml-maven-plugin</artifactId>
-                <version>1.0.2</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>                            
-                        <goals>
-                            <goal>transform</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <transformationSets>
-                        <transformationSet>
-                            <dir>src/build/xsd</dir>
-                            <stylesheet>src/build/annotation.xsl</stylesheet>
-                            <outputDir>${project.build.directory}/generated-sources/java</outputDir>
-                        </transformationSet>
-                    </transformationSets>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -89,12 +68,34 @@
                 <configuration>
                     <instructions>
                         <Bundle-Activator>org.protege.editor.owl.ProtegeOWL</Bundle-Activator>
-                        <Bundle-SymbolicName>${project.groupId}.${project.artifactId;singleton:=true</Bundle-SymbolicName>
+                        <Bundle-SymbolicName>${project.groupId}.${project.artifactId};singleton:=true</Bundle-SymbolicName>
+                        <Include-Resource>
+                            {maven-resources},
+                            ${project.build.directory}/classes/plugin.xml
+                        </Include-Resource>
                         <Export-Package/>
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <annotationProcessorPaths>
+                            <annotationProcessorPath>
+                                <groupId>br.ufes.inf.nemo</groupId>
+                                <artifactId>protege-plugin-annotations</artifactId>
+                                <version>1.0-SNAPSHOT</version>
+                            </annotationProcessorPath>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <profiles>
